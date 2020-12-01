@@ -1,9 +1,10 @@
-require 'rspec'
+# require 'rspec'
 require './lib/oystercard'
 
 describe Oystercard do
   let(:card) { Oystercard.new }
   let(:station) {double("fake station")}
+  let(:station2) {double("another fake station")}
 
   it 'is created with a default balance of zero' do
     expect(card.balance).to eq(0)
@@ -38,19 +39,33 @@ describe Oystercard do
   end
   describe '#touch_out' do
     it "changes the state of the card to 'not_in_journey'" do
-      card.touch_out
+      card.touch_out(station)
       expect(card.in_journey).to eq(false)
     end
     it "deducts the MINIMUM_FARE from the card balance" do
       card.top_up(20)
       card.touch_in("station_name")
-      expect{card.touch_out}.to change{card.balance}.from(20).to(20 - Oystercard::MINIMUM_FARE)
+      expect{card.touch_out(station)}.to change{card.balance}.from(20).to(20 - Oystercard::MINIMUM_FARE)
     end
     it "returns the entry_station of the card to nil" do
       card.top_up(Oystercard::MINIMUM_BALANCE + 1)
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(station)
       expect(card.entry_station).to eq(nil)
+    end
+    it 'stores exit station on touch out' do
+      card.top_up(Oystercard::MINIMUM_BALANCE + 1)
+      card.touch_in(station)
+      card.touch_out(station)
+      expect(card.exit_station).to eq station
+    end
+
+    it 'stores the entry and exit stations in journey history' do
+      card.top_up(Oystercard::MINIMUM_BALANCE + 1)
+      card.touch_in(station)
+      p station
+      card.touch_out(station2)
+      expect(card.journey_history[0]).to eq ({entry:station, exit:station2})
     end
   end
   describe '#in_journey?' do
@@ -60,7 +75,7 @@ describe Oystercard do
       expect(card.in_journey).to be(true)
     end
     it "returns false for an 'out' card" do
-      card.touch_out
+      card.touch_out(station)
       expect(card.in_journey).to be(false)
     end
   end
