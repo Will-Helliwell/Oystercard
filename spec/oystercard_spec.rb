@@ -13,6 +13,10 @@ describe Oystercard do
     expect(card.entry_station).to eq(nil)
   end
 
+  it 'is created with an empty journey history' do
+    expect(card.journey_history).to eq([])
+  end
+
   describe '#top_up' do
     it 'returns updated balance after calling top_up method' do
       card.top_up(20)
