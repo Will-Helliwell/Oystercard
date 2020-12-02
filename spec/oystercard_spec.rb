@@ -1,4 +1,4 @@
-# require 'rspec'
+require 'rspec'
 require './lib/oystercard'
 
 describe Oystercard do

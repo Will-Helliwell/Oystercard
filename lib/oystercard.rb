@@ -1,3 +1,5 @@
+require './lib/station.rb'
+
 class Oystercard
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
