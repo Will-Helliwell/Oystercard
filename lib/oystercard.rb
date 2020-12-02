@@ -1,4 +1,5 @@
 require './lib/station.rb'
+require 'journey.rb'
 
 class Oystercard
   MAXIMUM_BALANCE = 90
