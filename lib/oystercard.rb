@@ -7,6 +7,7 @@ class Oystercard
   MINIMUM_BALANCE = MINIMUM_FARE
 
   attr_reader :balance, :journey_history
+  attr_accessor :current_journey
 
   def initialize(balance = 0)
     @balance = balance
@@ -20,13 +21,13 @@ class Oystercard
 
   def touch_in(station_name)
     raise 'The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!' if balance < MINIMUM_BALANCE
-    $journey = Journey.new(station_name)
+    @current_journey = Journey.new(station_name)
   end
 
   def touch_out(station)
     self.deduct(MINIMUM_FARE)
-    $journey.finish
-    @journey_history << {entry: $journey.entry_station, exit: station}
+    @current_journey.finish
+    @journey_history << {entry: @current_journey.entry_station, exit: station}
   end
 
   private
