@@ -67,7 +67,6 @@ describe Oystercard do
     it 'stores the entry and exit stations in journey history' do
       card.top_up(Oystercard::MINIMUM_BALANCE + 1)
       card.touch_in(station)
-      p station
       card.touch_out(station2)
       expect(card.journey_history[0]).to eq ({entry:station, exit:station2})
     end
