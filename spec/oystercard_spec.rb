@@ -25,16 +25,16 @@ describe Oystercard do
   describe '#touch_in' do
     it "creates a new instance of Journey" do
       card.top_up(Oystercard::MINIMUM_BALANCE + 1)
-      expect(card.touch_in("station_name")).to be_a(Journey)
+      expect(card.touch_in(station)).to be_a(Journey)
     end
     it 'returns an error when the balance is less than #{MINIMUM_BALANCE}' do
-      expect { card.touch_in("station_name") }.to raise_error('The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!')
+      expect { card.touch_in(station) }.to raise_error('The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!')
     end
   end
   describe '#touch_out' do
     it "deducts the MINIMUM_FARE from the card balance" do
       card.top_up(20)
-      card.touch_in("station_name")
+      card.touch_in(station)
       expect{card.touch_out(station)}.to change{card.balance}.from(20).to(20 - Oystercard::MINIMUM_FARE)
     end
     it 'stores the entry and exit stations in journey history' do
