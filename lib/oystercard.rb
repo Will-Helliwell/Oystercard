@@ -4,6 +4,7 @@ require './lib/journey.rb'
 class Oystercard
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
+  PENALTY_FARE = 6
   MINIMUM_BALANCE = MINIMUM_FARE
 
   attr_reader :balance, :journey_history
@@ -12,6 +13,7 @@ class Oystercard
   def initialize(balance = 0)
     @balance = balance
     @journey_history = []
+    @current_journey = Journey.new
   end
 
   def top_up(money)
@@ -21,13 +23,15 @@ class Oystercard
 
   def touch_in(station_name)
     raise 'The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!' if balance < MINIMUM_BALANCE
-    @current_journey = Journey.new(station_name)
+    self.deduct(@current_journey.fare)
+    @current_journey.start(station_name)
   end
 
   def touch_out(station)
-    self.deduct(MINIMUM_FARE)
+    @current_journey.exit_station = station
+    self.deduct(@current_journey.fare)
+    @journey_history << {entry: @current_journey.entry_station, exit: @current_journey.exit_station}
     @current_journey.finish
-    @journey_history << {entry: @current_journey.entry_station, exit: station}
   end
 
   private
