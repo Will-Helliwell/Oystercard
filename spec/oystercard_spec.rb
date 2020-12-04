@@ -24,11 +24,8 @@ describe Oystercard do
       expect { card.top_up(Oystercard::MAXIMUM_BALANCE + 1) }.to raise_error("Cannot exeed max balance (#{Oystercard::MAXIMUM_BALANCE})!")
     end
   end
+
   describe '#touch_in' do
-    # it "creates a new instance of Journey" do
-    #   card.top_up(Oystercard::MINIMUM_BALANCE + 1)
-    #   expect(card.touch_in(station)).to be_a(Journey)
-    # end
     it 'returns an error when the balance is less than #{MINIMUM_BALANCE}' do
       expect { card.touch_in(station) }.to raise_error('The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!')
     end
@@ -42,24 +39,25 @@ describe Oystercard do
       card.touch_in(station)
       card.touch_out(station2)
       card.touch_in(station3)
-      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Oystercard::MINIMUM_FARE)
+      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Journey::MINIMUM_FARE)
     end
     it "deducts the penalty fare if the user did not touch out previously" do
       card.top_up(Oystercard::MAXIMUM_BALANCE)
       card.touch_in(station)
       card.touch_in(station2)
-      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Oystercard::PENALTY_FARE)
+      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Journey::PENALTY_FARE)
     end
   end
+
   describe '#touch_out' do
     it "deducts the MINIMUM_FARE from the card balance if user touched in correctly" do
       card.top_up(Oystercard::MAXIMUM_BALANCE)
       card.touch_in(station)
-      expect{card.touch_out(station2)}.to change{card.balance}.from(Oystercard::MAXIMUM_BALANCE).to(Oystercard::MAXIMUM_BALANCE - Oystercard::MINIMUM_FARE)
+      expect{card.touch_out(station2)}.to change{card.balance}.from(Oystercard::MAXIMUM_BALANCE).to(Oystercard::MAXIMUM_BALANCE - Journey::MINIMUM_FARE)
     end
     it "deducts the penalty fare if user did not touch in previously" do
       card.top_up(Oystercard::MAXIMUM_BALANCE)
-      expect{card.touch_out(station2)}.to change{card.balance}.from(Oystercard::MAXIMUM_BALANCE).to(Oystercard::MAXIMUM_BALANCE - Oystercard::PENALTY_FARE)
+      expect{card.touch_out(station2)}.to change{card.balance}.from(Oystercard::MAXIMUM_BALANCE).to(Oystercard::MAXIMUM_BALANCE - Journey::PENALTY_FARE)
     end
     it 'stores the entry and exit stations in journey history' do
       card.top_up(Oystercard::MINIMUM_BALANCE + 1)

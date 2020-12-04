@@ -11,6 +11,7 @@ describe Journey do
       expect(subject.entry_station).to eq(station)
     end
   end
+
   describe "#finish" do
     it "resets the entry_station to nil" do
       subject.start(station)
@@ -29,7 +30,7 @@ describe Journey do
     describe "#fare" do
       it "it returns the penalty fare" do
         subject.exit_station = station
-        expect(subject.fare).to eq(Oystercard::PENALTY_FARE)
+        expect(subject.fare).to eq(Journey::PENALTY_FARE)
       end
     end
   end
@@ -37,7 +38,7 @@ describe Journey do
     describe "#fare" do
       it "it returns the penalty fare" do
         subject.start(station)
-        expect(subject.fare).to eq(Oystercard::PENALTY_FARE)
+        expect(subject.fare).to eq(Journey::PENALTY_FARE)
       end
     end
   end
@@ -46,7 +47,7 @@ describe Journey do
       it "it returns the minimum fare" do
         subject.start(station)
         subject.exit_station = station2
-        expect(subject.fare).to eq(Oystercard::MINIMUM_FARE)
+        expect(subject.fare).to eq(Journey::MINIMUM_FARE)
       end
     end
   end

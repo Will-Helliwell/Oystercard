@@ -1,6 +1,9 @@
-require './lib/oystercard'
+require './lib/oystercard.rb'
 
 class Journey
+  MINIMUM_FARE = 1
+  PENALTY_FARE = 6
+
   attr_reader :entry_station
   attr_accessor :exit_station
 
@@ -21,11 +24,11 @@ class Journey
 
   def fare
     if @entry_station == nil && @exit_station != nil
-      return Oystercard::PENALTY_FARE
+      return PENALTY_FARE
     elsif @entry_station != nil && @exit_station == nil
-      return Oystercard::PENALTY_FARE
+      return PENALTY_FARE
     elsif @entry_station != nil && @exit_station != nil
-      return Oystercard::MINIMUM_FARE
+      return MINIMUM_FARE
     else
       return 0
     end

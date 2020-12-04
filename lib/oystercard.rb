@@ -3,9 +3,7 @@ require './lib/journey.rb'
 
 class Oystercard
   MAXIMUM_BALANCE = 90
-  MINIMUM_FARE = 1
-  PENALTY_FARE = 6
-  MINIMUM_BALANCE = MINIMUM_FARE
+  MINIMUM_BALANCE = 1
 
   attr_reader :balance, :journey_history
   attr_accessor :current_journey
@@ -23,14 +21,19 @@ class Oystercard
 
   def touch_in(station_name)
     raise 'The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!' if balance < MINIMUM_BALANCE
+    # deducts penalty fare if user did not touch out on last journey, deducts zero otherwise
     self.deduct(@current_journey.fare)
+    # sets entry station
     @current_journey.start(station_name)
   end
 
   def touch_out(station)
+    # sets exit station
     @current_journey.exit_station = station
+    # deducts correct fair if user touched in correctly, deducts penalty fare otherwise
     self.deduct(@current_journey.fare)
     @journey_history << {entry: @current_journey.entry_station, exit: @current_journey.exit_station}
+    # resets entry and exit station to nil so that user will not be charged on next touch-in
     @current_journey.finish
   end
 
