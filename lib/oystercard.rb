@@ -3,7 +3,7 @@ require './lib/journey.rb'
 
 class Oystercard
   MAXIMUM_BALANCE = 90
-  MINIMUM_BALANCE = 1
+  MINIMUM_BALANCE = ::Journey::MINIMUM_FARE
 
   attr_reader :balance, :journey_history
   attr_accessor :current_journey

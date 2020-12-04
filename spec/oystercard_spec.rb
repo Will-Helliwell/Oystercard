@@ -6,6 +6,7 @@ describe Oystercard do
   let(:station) {double("fake station")}
   let(:station2) {double("another fake station")}
   let(:station3) {double("a third fake station")}
+  let(:journey) {double("fake journey")}
 
 
   it 'is created with a default balance of zero' do
@@ -29,23 +30,26 @@ describe Oystercard do
     it 'returns an error when the balance is less than #{MINIMUM_BALANCE}' do
       expect { card.touch_in(station) }.to raise_error('The balance is less than (#{MINIMUM_BALANCE}). Top_up your card!')
     end
-    it "deducts nothing from the balance of a new card" do
-      card.top_up(Oystercard::MAXIMUM_BALANCE)
-      card.touch_in(station)
-      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE)
+    context "when fare is zero" do
+      let(:fare) {0}
+      it "deducts nothing from the balance of a new card" do
+        card.top_up(Oystercard::MAXIMUM_BALANCE)
+        card.current_journey = journey
+        allow(journey).to receive(:fare) {fare}
+        allow(journey).to receive(:start).with(station) {station}
+        card.touch_in(station)
+        expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE)
+      end
     end
-    it "deducts nothing from the balance if the user touched out previously" do
-      card.top_up(Oystercard::MAXIMUM_BALANCE)
-      card.touch_in(station)
-      card.touch_out(station2)
-      card.touch_in(station3)
-      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Journey::MINIMUM_FARE)
-    end
-    it "deducts the penalty fare if the user did not touch out previously" do
-      card.top_up(Oystercard::MAXIMUM_BALANCE)
-      card.touch_in(station)
-      card.touch_in(station2)
-      expect(card.balance).to eq(Oystercard::MAXIMUM_BALANCE - Journey::PENALTY_FARE)
+    context "when fare is penalty fare" do
+      let(:fare) {Journey::PENALTY_FARE}
+      it "deducts penalty fare from the balance of a new card" do
+        card.top_up(Oystercard::MAXIMUM_BALANCE)
+        card.current_journey = journey
+        allow(journey).to receive(:fare) {fare}
+        allow(journey).to receive(:start).with(station) {station}
+        expect{card.touch_in(station)}.to change{card.balance}.from(Oystercard::MAXIMUM_BALANCE).to(Oystercard::MAXIMUM_BALANCE - fare)
+      end
     end
   end
 

@@ -1,4 +1,4 @@
-require './lib/oystercard.rb'
+# require './lib/oystercard.rb'
 
 class Journey
   MINIMUM_FARE = 1
