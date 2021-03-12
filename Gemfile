@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
-    group :test do
-        gem 'rspec'
-    end
-ruby "2.7.0"
+  ruby "2.7.0"
+
+  group :test do
+      gem 'rspec'
+      gem 'simplecov', require: false
+  end
