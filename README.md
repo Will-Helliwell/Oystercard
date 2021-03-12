@@ -1,11 +1,19 @@
 # Oyster Card
 
-Fully test-driven back-end logic for a non-account-based ticketing system based on London's Oystercard. Project was written 2 weeks into bootcamp, and so about 6 weeks into my 
+Fully test-driven back-end logic for a non-account-based ticketing system based on London's Oystercard. Project was written 2 weeks into bootcamp, and so about 6 weeks into my
 learning to code journey.
 
 Focus for the project:
   - Introduction to OOP and SOLID coding prnciples in Ruby
   - Introduction to testing and mocking
+
+  ### **Tech Summary**
+
+  | Technology    | Use                           |
+  | ------------- | ----------------------------- |
+  | Ruby          | Back-end                       |
+  | Rspec       | Unit testing     |
+  | Simpelcov         | Test Coverage            |
 
 ## Classes
 
@@ -27,7 +35,7 @@ Station:
 ![screenshot](https://github.com/Will-Helliwell/Oystercard/blob/main/oystercard_screenshot.png
 )
 
-## User Stories 
+## User Stories
 
 ### Completed
 ```
@@ -104,12 +112,9 @@ Navigate to `http://localhost:4567/`
 `test_command` (e.g. `rspec`)
 All tests passing
 - Coverage:
-  - X%
-  - X unit tests
-  - X feature tests
-- Isolation - describe
+  - 100%
+  - 19 unit tests
 
 # Other Contributors
 
 This project was written over a series of 5 days pairing with other students.
-
