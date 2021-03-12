@@ -1,4 +1,4 @@
-# Oyster Card
+# Oystercard
 
 Fully test-driven back-end logic for a non-account-based ticketing system based on London's Oystercard. Project was written 2 weeks into bootcamp, and so about 6 weeks into my
 learning to code journey.
@@ -117,4 +117,8 @@ All tests passing
 
 # Other Contributors
 
-This project was written over a series of 5 days pairing with other students.
+This project was written over a series of 5 days pairing with other students:
+- Will Dixon
+- Ara Cho
+- Irina Giosanu
+- Lisa Bardelli
