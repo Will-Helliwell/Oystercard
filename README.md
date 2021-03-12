@@ -24,7 +24,7 @@ Station:
 
 ## Screenshot of app in use
 
-![screenshot](https://github.com/Will-Helliwell/bank_tech_test/blob/master/bank_tech_test_screenshot.png
+![screenshot](https://github.com/Will-Helliwell/Oystercard/blob/main/oystercard_screenshot.png
 )
 
 ## User Stories 
